@@ -21,7 +21,7 @@ def send_msg_to_single_user(user, content):
     msg = start_hour + '-' + cur_hour_str + ' ' + content
     # 向某人发送文件（以`文件传输助手`为例，发送三个不同类型文件）
     try:
-        print(f"开始向单个用户`{user}`发送信息:{msg}")
+        print(f"开始向单个用户`{user}`发送信息:{msg}，发送时间：{cur_time}")
         wx.ChatWith(user)  # 打开`文件传输助手`聊天窗口
         wx.SendMsg(msg)
         # wx.SendFiles(file)
@@ -35,11 +35,11 @@ wx = WeChat()
 # 获取会话列表
 wx.GetSessionList()
 user = "文件传输助手"  # 适用于中文版微信
-content = "豫正通系统运行正常。"
+content = "XXX系统运行正常。"
 scheduler = BlockingScheduler()
-# 于每天的19点-次日7点，每两小时0分20秒发送消息。
-# scheduler.add_job(send_msg_to_single_user, 'cron', hours='1,3,5,7,19,21,23', second='20', args=[user])
-scheduler.add_job(send_msg_to_single_user, 'cron', hour='14,15,16', second='0/10', args=[user, content])
+# 每两小时0分20秒发送消息。
+scheduler.add_job(send_msg_to_single_user, 'cron', hour='1,3,5,7,9,11,13,15,17,19,21,23', minute='0', second='20', args=[user, content])
+# scheduler.add_job(send_msg_to_single_user, 'cron', hour='14,15,16', second='0/10', args=[user, content])
 scheduler.start()
 
 ###############################################################################
